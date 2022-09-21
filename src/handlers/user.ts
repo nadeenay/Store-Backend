@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express'
-
 import { user, User } from '../models/user'
 import jwt from 'jsonwebtoken'
 import tokenVerification from '../middlewares/TokenVerification'
@@ -8,13 +7,27 @@ import tokenVerification from '../middlewares/TokenVerification'
 const user = new User()
 
 const index = async (_req: Request, res: Response) => {
+    try{
     const users = await user.index()
+    res.status(200)
     res.json(users)
+    } catch(err)
+    {
+        res.status(400)
+        res.json(err)
+    }
 }
 
 const show = async (req: Request, res: Response) => {
+    try{
     const user_ = await user.show(parseInt(req.params.id))
+    res.status(200)
     res.json(user_)
+} catch(err)
+{
+    res.status(400)
+    res.json(err)
+}
 }
 
 const create = async (req: Request, res: Response) => {
@@ -26,6 +39,7 @@ const create = async (req: Request, res: Response) => {
     try {
         const newUser = await user.create(user_)
         var token= jwt.sign({user_id: newUser.id},process.env.TOKEN_SECRET as jwt.Secret)
+        res.status(200)
         res.json(token)
     } catch(err) {
         res.status(400)

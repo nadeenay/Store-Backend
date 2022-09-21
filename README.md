@@ -20,15 +20,11 @@ TOKEN_SECRET= JWT_SECRET
 CREATE DATABASE store;
 CREATE DATABASE store_test;
 ```
-#### 4- run the migration file to create tables
-```
-db-migrate up 
-```
 #### 5- run the server 
 ```
 npm run server
 ```
 #### 6- run tests
 ```
-npm run test 
+npm run testJ 
 ```

@@ -40,6 +40,7 @@ res.json(orders)
 const currentOrder = async (_req: Request, res: Response) => {
     try{
   const orders = await order_.currentOrder(parseInt(_req.params.user_id))
+  res.status(200);
   res.json(orders)
     } catch(err){
       res.status(401);
@@ -49,23 +50,40 @@ const currentOrder = async (_req: Request, res: Response) => {
 }
 
 const completedOrders = async (_req: Request, res: Response) => {
+   try{
    const order = await order_.completedOrders(parseInt(_req.params.user_id))
+   res.status(200);
    res.json(order)
+   } catch(err) {
+      res.status(401);
+      res.json('can not handle completedOrders request')
+      return 
+   }
 }
 
 const  addProduct= async (req:Request, res:Response) =>{
+
+  try{
   const order_product_:order_product = {
       quantity: req.body.quantity,
       order_id: parseInt(req.params.order_id),
       product_id: parseInt(req.params.product_id)
   }
+  console.log(req.body)
   const Product = await order_.addProduct(order_product_)
+  res.status(200);
   res.json(Product)
+} catch(err) {
+  res.status(401);
+  res.json('can not handle completedOrders request')
+  return 
+}
 }
 
 const show= async(req:Request, res:Response) =>{
    try{
   const order = await order_.show(parseInt(req.params.id))
+  res.status(200);
    }catch(err) {
     throw new Error(`can not show this order ${err}`)
    }

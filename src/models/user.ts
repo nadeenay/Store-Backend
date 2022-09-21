@@ -1,7 +1,5 @@
 import Client from '../database'
 import bcrypt from 'bcrypt'
-
-
 const saltRounds = process.env.SALT_ROUNDS
 const pepper = process.env.BCRYPT_PASSWORD
 
